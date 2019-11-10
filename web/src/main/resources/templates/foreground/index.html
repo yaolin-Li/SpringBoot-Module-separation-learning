@@ -1,0 +1,325 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>DB'S BLOG</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="http://op93pqovl.bkt.clouddn.com/images/blog.ico"  rel="icon" type="image/x-icon" >
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel='stylesheet' type='text/css'/>
+    <link href="http://op93pqovl.bkt.clouddn.com/css/style.css" rel='stylesheet' type='text/css'/>
+    <link th:href="@{/foreground/css/mystyle.css}" href="../../static/foreground/css/mystyle.css" rel='stylesheet' type='text/css'/>
+    <link href="http://op93pqovl.bkt.clouddn.com/css/dropdown.css" rel='stylesheet' type='text/css'/>
+    <link href="http://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.min.css" rel="stylesheet">
+    <link href="http://op93pqovl.bkt.clouddn.com/css/jquery.emoji.css" rel="stylesheet">
+    <!--百度站点统计-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?8bbebf81099e93cb652e9215fa86d98c";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+</head>
+<body>
+<div class="header" id="ban" th:include="foreground/common::header"></div><!--头部导航结束-->
+
+<div class="header-bottom" th:include="foreground/common::blogTitle"></div><!--博客标题结束-->
+
+<div class="banner" style="background: url(http://op93pqovl.bkt.clouddn.com/images/banner-1.jpg) no-repeat 0px 0px;background-size: 100%">
+    <div class="container">
+        <h2 th:text="${application.signature.title}">提醒自己一件事，千万不要自己感动自己</h2>
+        <p th:text="${application.signature.content}">大部分人看似的努力，不过是愚蠢导致的。什么熬夜看书到天亮，连续几天只睡几小时，多久没放假了，如果这些东西也值得夸耀，那么富士康流水线上任何一个人都比你努力多了。人难免天生有自怜的情绪，唯有时刻保持清醒，才能看清真正的价值在哪里。 </p>
+        <a href="#" th:text="${application.signature.buttonText}">Hello Word!</a>
+    </div>
+</div><!--鸡汤签名结束-->
+
+<div class="services w3l wow fadeInDown" data-wow-duration=".8s" data-wow-delay=".2s">
+    <div class="container">
+        <div class="grid_3 grid_5">
+            <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                <ul id="myTab" class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#expeditions" id="expeditions-tab" role="tab"data-toggle="tab" aria-controls="expeditions"aria-expanded="true">音乐欣赏</a>
+                    </li>
+                    <li role="presentation" class="">
+                        <a href="#safari" role="tab" id="safari-tab" data-toggle="tab" aria-controls="safari">网页游戏</a>
+                    </li>
+                    <li role="presentation" class="">
+                        <a href="#trekking" role="tab" id="trekking-tab" data-toggle="tab" aria-controls="trekking">照片墙</a>
+                    </li>
+                </ul><!--tabs标题结束-->
+                <div id="myTabContent" class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade" id="expeditions" aria-labelledby="expeditions-tab">
+
+                        <div class="col-md-4 col-sm-5 tab-image">
+                            <img th:src="@{/foreground/images/f2.jpg}" src="../../static/foreground/images/f2.jpg" class="img-responsive" alt="Wanderer">
+                        </div>
+                        <div class="col-md-4 col-sm-5 tab-image">
+                            <img th:src="@{/foreground/images/f4.jpg}" src="../../static/foreground/images/f4.jpg" class="img-responsive" alt="Wanderer">
+                        </div>
+                        <div class="col-md-4 col-sm-5 tab-image">
+                            <img th:src="@{/foreground/images/f3.jpg}" src="../../static/foreground/images/f3.jpg" class="img-responsive" alt="Wanderer">
+                        </div>
+                        <div class="clearfix"></div>
+                    </div><!--tab1内容结束-->
+                    <div role="tabpanel" class="tab-pane fade" id="safari" aria-labelledby="safari-tab">
+                        <div class="col-md-4 col-sm-5 tab-image">
+                            <img th:src="@{/foreground/images/t1.jpg}" src="../../static/foreground/images/t1.jpg" class="img-responsive" alt="Wanderer">
+                        </div>
+                        <div class="col-md-4 col-sm-5 tab-image">
+                            <img th:src="@{/foreground/images/t2.jpg}" src="../../static/foreground/images/t2.jpg" class="img-responsive" alt="Wanderer">
+                        </div>
+                        <div class="col-md-4 col-sm-5 tab-image">
+                            <img th:src="@{/foreground/images/t3.jpg}" src="../../static/foreground/images/t3.jpg" class="img-responsive" alt="Wanderer">
+                        </div>
+                        <div class="clearfix"></div>
+                    </div><!--tab2内容结束-->
+                    <div role="tabpanel" class="tab-pane fade active in" id="trekking" aria-labelledby="trekking-tab">
+
+                        <div class="col-md-4 col-sm-5 tab-image">
+                            <img th:src="@{/foreground/images/m2.jpg}" src="../../static/foreground/images/m2.jpg" class="img-responsive" alt="Wanderer">
+                        </div>
+                        <div class="col-md-4 col-sm-5 tab-image">
+                            <img th:src="@{/foreground/images/m1.jpg}" src="../../static/foreground/images/m1.jpg" class="img-responsive" alt="Wanderer">
+                        </div>
+                        <div class="col-md-4 col-sm-5 tab-image">
+                            <img th:src="@{/foreground/images/m3.jpg}" src="../../static/foreground/images/m3.jpg" class="img-responsive" alt="Wanderer">
+                        </div>
+                        <div class="clearfix"></div>
+                    </div><!--tab3内容结束-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--tabs页面结束-->
+
+<div class="technology " >
+    <div class="container">
+        <div class="col-md-9 technology-left">
+            <div class="tech-no">
+                <div class="tc-ch " >
+                    <h3><a th:href="'/blog/'+${application.recommendBlog.id}" href="blog.html">推荐 : <span th:text="${application.recommendBlog.title}">网站源码下载</span></a></h3>
+                    <h6></h6>
+                    <div class="tch-img">
+                        <a th:href="'/blog/'+${application.recommendBlog.id}" href="blog.html"><img th:src="${application.recommendBlog.coverImageName}"src="../../static/foreground/images/t4.jpg" class="img-responsive" style="width: 100%" alt=""></a>
+                    </div>
+                    <h6>BY <a  th:text="${application.recommendBlog.author}">氧化钡 </a> <span th:text="${#calendars.format(application.recommendBlog.publishTime,'yyyy-MM-dd')}">2017-04-13</span></h6>
+                    <p th:text="${application.recommendBlog.summary}">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud eiusmod tempor incididunt
+                        ut labore et dolore magna aliqua exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat.</p>
+                    <div class="bht1">
+                        <a th:href="'/blog/'+${application.recommendBlog.id}" href="blog.html">继续阅读</a>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div><!--推荐阅读结束-->
+                <div class="clearfix"></div>
+
+                <div class="w3ls tc-ch wow fadeInDown" data-wow-duration=".8s" data-wow-delay=".2s">
+                    <h3><a href="blog.html">最新更新</a></h3>
+                    <h6></h6>
+                    <div class="col-md-6  w3ls-left wow fadeInDown">
+                        <div class="tc-ch">
+                            <div class="tch-img">
+                                <a th:href="'/blog/'+${newBlogList[0].id}" href="blog.html">
+                                    <img th:src="${newBlogList[0].coverImageName}" src="../../static/foreground/images/m4.jpg" class="img-responsive" style="max-height: 250px">
+                                </a>
+                            </div>
+                            <h6><a th:href="'/blog/'+${newBlogList[0].id}" href="blog.html" th:text="${newBlogList[0].title}">最新博文0</a></h6>
+                            <h6>BY <a  th:text="${newBlogList[0].author}">氧化钡</a> <span th:text="${#calendars.format(newBlogList[0].publishTime,'yyyy-MM-dd')}">2017-04-13</span></h6>
+                            <p th:text="${newBlogList[0].summary}" class="summary" ></p>
+                            <div class="bht1">
+                                <a th:href="'/blog/'+${newBlogList[0].id}" href="blog.html">查看更多</a>
+                            </div>
+                            <div class="soci">
+                                <p style="padding-right: 1.8em">
+                                    <a class="span_link" ><span class="glyphicon glyphicon-comment"></span><span th:text="${newBlogList[0].commentCount}">0</span></a>
+                                    <a class="span_link" ><span class="glyphicon glyphicon-eye-open"></span><span th:text="${newBlogList[0].readNum}">56</span></a>
+                                </p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 w3ls-left wow fadeInDown">
+                        <div class="tc-ch" >
+                            <div class="tch-img">
+                                <a th:href="'/blog/'+${newBlogList[1].id}" href="blog.html">
+                                    <img th:src="${newBlogList[1].coverImageName}"  class="img-responsive" style="max-height: 250px" ></a>
+                            </div>
+
+                            <h6><a th:href="'/blog/'+${newBlogList[1].id}" href="blog.html" th:text="${newBlogList[1].title}">最新博文1</a></h6>
+                            <h6>BY <a  th:text="${newBlogList[1].author}">Bobbi</a> <span th:text="${#calendars.format(newBlogList[1].publishTime,'yyyy-MM-dd')}">2017-04-13</span></h6>
+                            <p th:text="${newBlogList[1].summary}" class="summary" ></p>
+                            <div class="bht1">
+                                <a th:href="'/blog/'+${newBlogList[1].id}" href="blog.html">查看更多</a>
+                            </div>
+                            <div class="soci">
+                                <p style="padding-right: 1.8em">
+                                    <a class="span_link" ><span class="glyphicon glyphicon-comment"></span><span th:text="${newBlogList[1].commentCount}">0</span></a>
+                                    <a class="span_link" ><span class="glyphicon glyphicon-eye-open"></span><span th:text="${newBlogList[1].readNum}">56</span></a>
+                                </p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div><!--最新更新结束-->
+
+                <div class="wthree">
+                    <div class="col-md-6 wthree-left wow fadeInDown" data-wow-duration=".8s" data-wow-delay=".2s" style="width: 250px;height: 250px;">
+                        <div class="tch-img">
+                            <a th:href="'/blog/'+${newBlogList[2].id}" href="blog.html">
+                                <img th:src="${newBlogList[2].coverImageName}"  class="img-responsive" >
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 wthree-right wow fadeInDown" data-wow-duration=".8s" data-wow-delay=".2s">
+                        <h6><a th:href="'/blog/'+${newBlogList[2].id}" href="blog.html" th:text="${newBlogList[2].title}">最新博文2</a></h6>
+                        <h6>BY <a  th:text="${newBlogList[2].author}">氧化钡 </a> <span th:text="${#calendars.format(newBlogList[2].publishTime,'yyyy-MM-dd')}">2017-04-13</span></h6>
+                        <p th:text="${newBlogList[2].summary}" class="summary">Ut enim ad minim veniam, quis nostrud eiusmod tempor incididunt ut labore et dolore magna
+                            aliqua exercitation ullamco laboris .</p>
+                        <div class="bht1">
+                            <a th:href="'/blog/'+${newBlogList[2].id}" href="blog.html">查看更多</a>
+                        </div>
+                        <div class="soci">
+                            <p>
+                                <a class="span_link" ><span class="glyphicon glyphicon-comment"></span><span th:text="${newBlogList[2].commentCount}">0</span></a>
+                                <a class="span_link" ><span class="glyphicon glyphicon-eye-open"></span><span th:text="${newBlogList[2].readNum}">56</span></a>
+                            </p>
+                        </div>
+                        <div class="clearfix"></div>
+
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="wthree">
+                    <div class="col-md-6 wthree-left wow fadeInDown" data-wow-duration=".8s" data-wow-delay=".2s" style="width: 250px;height: 250px;">
+                        <div class="tch-img">
+                            <a th:href="'/blog/'+${newBlogList[3].id}" href="blog.html">
+                                <img th:src="${newBlogList[3].coverImageName}" src="../../static/foreground/images/f1.jpg" class="img-responsive" >
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 wthree-right wow fadeInDown" data-wow-duration=".8s" data-wow-delay=".2s">
+                        <h6><a th:href="'/blog/'+${newBlogList[3].id}" href="blog.html" th:text="${newBlogList[3].title}">最新博文2</a></h6>
+                        <h6>BY <a  th:text="${newBlogList[3].author}">氧化钡 </a> <span th:text="${#calendars.format(newBlogList[3].publishTime,'yyyy-MM-dd')}">2017-04-13</span></h6>
+                        <p th:text="${newBlogList[3].summary}" class="summary" ></p>
+                        <div class="bht1">
+                            <a th:href="'/blog/'+${newBlogList[3].id}" href="blog.html">查看更多</a>
+                        </div>
+                        <div class="soci">
+                            <p>
+                                <a class="span_link" ><span class="glyphicon glyphicon-comment"></span><span th:text="${newBlogList[3].commentCount}">0</span></a>
+                                <a class="span_link" ><span class="glyphicon glyphicon-eye-open"></span><span th:text="${newBlogList[3].readNum}">56</span></a>
+                            </p>
+                        </div>
+                        <div class="clearfix"></div>
+
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="wthree">
+                    <div class="col-md-6 wthree-left wow fadeInDown" data-wow-duration=".8s" data-wow-delay=".2s" style="width: 250px;height: 250px;">
+                        <div class="tch-img">
+                            <a th:href="'/blog/'+${newBlogList[4].id}" href="blog.html">
+                                <img th:src="${newBlogList[4].coverImageName}" src="../../static/foreground/images/f1.jpg" class="img-responsive" >
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 wthree-right wow fadeInDown" data-wow-duration=".8s" data-wow-delay=".2s">
+                        <h6><a th:href="'/blog/'+${newBlogList[4].id}" href="blog.html" th:text="${newBlogList[4].title}">最新博文2</a></h6>
+                        <h6>BY <a  th:text="${newBlogList[4].author}">氧化钡 </a> <span th:text="${#calendars.format(newBlogList[4].publishTime,'yyyy-MM-dd')}">2017-04-13</span></h6>
+                        <p th:text="${newBlogList[4].summary}" class="summary">Ut enim ad minim veniam, quis nostrud eiusmod tempor incididunt ut labore et dolore magna
+                            aliqua exercitation ullamco laboris .</p>
+                        <div class="bht1">
+                            <a th:href="'/blog/'+${newBlogList[4].id}" href="blog.html">查看更多</a>
+                        </div>
+                        <div class="soci">
+                            <p>
+                                <a class="span_link" ><span class="glyphicon glyphicon-comment"></span><span th:text="${newBlogList[4].commentCount}">0</span></a>
+                                <a class="span_link" ><span class="glyphicon glyphicon-eye-open"></span><span th:text="${newBlogList[4].readNum}">56</span></a>
+                            </p>
+                        </div>
+                        <div class="clearfix"></div>
+
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <!--3篇博文结束-->
+            </div>
+        </div><!--左侧内容结束-->
+
+        <div class="col-md-3 technology-right" th:include="foreground/common::rightNav" ></div><!--右侧内容结束-->
+
+        <div class="clearfix"></div>
+    </div>
+</div><!--内容主体结束-->
+
+<div class="footer" th:include="foreground/common::footer"></div><!--尾部结束-->
+
+<div class="copyright wow fadeInDown" data-wow-duration=".8s" data-wow-delay=".2s" th:include="foreground/common::copyright"></div><!--版权区结束-->
+
+<img id="oImg" th:src="@{/foreground/images/xiaolongbao.gif}" src="../../static/foreground/images/xiaolongbao.gif" />
+
+<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+<script src="http://op93pqovl.bkt.clouddn.com/js/jquery.svg3dtagcloud.min.js"></script>
+<script src="http://cdn.bootcss.com/modernizr/2.6.2/modernizr.min.js"></script>
+<script src="http://op93pqovl.bkt.clouddn.com/js/jquery.dropdown.js"></script>
+<script src="http://op93pqovl.bkt.clouddn.com/js/time.js"></script>
+<script src="http://cdn.bootcss.com/jquery-mousewheel/3.0.6/jquery.mousewheel.min.js" type="text/javascript"></script>
+<script src="http://cdn.bootcss.com/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.min.js" type="text/javascript"></script>
+<script src="http://op93pqovl.bkt.clouddn.com/js/jquery.emoji.js" type="text/javascript" ></script>
+<script th:src="@{/foreground/js/xiaolongbao.js}" src="../../static/foreground/js/xiaolongbao.js"></script>
+<script th:src="@{/foreground/js/myjs.js}" src="../../static/foreground/js/myjs.js"></script>
+<script  th:inline="javascript">
+    $(document).ready(function () {
+        var blogTagList=[[${application.blogTagList}]];
+        var entries=[];
+        for(var i in blogTagList){
+            var entry={
+                label:blogTagList[i].tagName,
+                url: '/blog/tag/'+blogTagList[i].id
+            }
+            entries.push(entry);
+        }
+        var settings = {
+            entries: entries,
+            width: '100%',
+            height: '100%',
+            radius: '73%',
+            radiusMin: '50%',
+            bgDraw: true,
+            bgColor: '#FFF',
+            opacityOver: 1.00,
+            opacityOut: 0.13,
+            opacitySpeed: 6,
+            fov: 800,
+            speed: 0.5,
+            fontFamily: 'Oswald, Arial, sans-serif',
+            fontSize: '15',
+            fontColor: '#000',
+            fontWeight: 'normal',//bold
+            fontStyle: 'normal',//italic
+            fontStretch: 'normal',//wider, narrower, ultra-condensed, extra-condensed, condensed, semi-condensed, semi-expanded, expanded, extra-expanded, ultra-expanded
+            fontToUpperCase: false
+
+        };
+
+        //var svg3DTagCloud = new SVG3DTagCloud( document.getElementById( 'holder'  ), settings );
+        $('#tag-cloud').svg3DTagCloud(settings);
+        parse()
+    });
+
+
+
+</script>
+</body>
+</html>

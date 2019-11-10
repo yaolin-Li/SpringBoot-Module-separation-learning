@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 对应dao接口 -->
+<mapper namespace="com.ldb.dao.CommentDAO">
+
+    <resultMap id="CommentResultMap" type="com.ldb.pojo.po.CommentPO" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="nickName" property="nickName" jdbcType="VARCHAR" />
+        <result column="userIP" property="userIP" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="publishTime" property="publishTime" jdbcType="TIMESTAMP" />
+        <result column="blogId" property="blogId" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="listVO">
+        nickName,content,publishTime
+    </sql>
+
+    <sql id="listPO">
+        id,nickName,content,publishTime,blogId,userIP
+    </sql>
+
+    <select id="getCommentCount" parameterType="Integer" resultType="Long">
+        select count(*) from comment
+        <if test="blogId !=null">
+            where blogId=#{blogId}
+        </if>
+    </select>
+
+    <select id="listNewCommentVO" resultMap="CommentResultMap">
+        SELECT <include refid="listVO"/> from comment ORDER BY publishTime DESC limit 0,5
+    </select>
+
+    <select id="listCommentPO" resultMap="CommentResultMap" parameterType="Map">
+        select <include refid="listPO"/> from comment
+        <where>
+            <if test="blogId!=null">
+                and blogId=#{blogId}
+            </if>
+            <if test="id!=null">
+                and id=#{id}
+            </if>
+        </where>
+         ORDER BY publishTime desc
+        <if test="start!=null and pageSize!=null">
+            limit #{start},#{pageSize}
+        </if>
+    </select>
+
+    <insert id="addComment" parameterType="com.ldb.pojo.po.CommentPO"  useGeneratedKeys="true"  keyProperty="id">
+        insert into comment values(null,#{nickName},#{userIP},#{content},#{publishTime},#{blogId})
+    </insert>
+
+    <delete id="deleteComment" parameterType="Map">
+        delete from comment
+        <where>
+            <if test="id!=null">
+                and id=#{id}
+            </if>
+            <if test="blogId!=null">
+                and blogId=#{blogId}
+            </if>
+        </where>
+    </delete>
+
+</mapper> 

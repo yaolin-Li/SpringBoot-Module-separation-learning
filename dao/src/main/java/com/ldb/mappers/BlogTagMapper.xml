@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 对应dao接口 -->
+<mapper namespace="com.ldb.dao.BlogTagDAO">
+    <resultMap id="blogTagResultMap" type="com.ldb.pojo.po.BlogTagPO" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="tagName" property="tagName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="list">
+        id,tagName
+    </sql>
+
+
+    <select id="listBlogTagPO" resultMap="blogTagResultMap" parameterType="Map">
+        select <include refid="list"/> from blogTag
+        <if test="start!=null and pageSize!=null">
+            limit #{start},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getBlogTag" resultMap="blogTagResultMap">
+        select * from blogTag where id=#{blogTagId}
+    </select>
+
+    <update id="updateBlogTag" parameterType="com.ldb.pojo.po.BlogTagPO">
+        update blogtag set tagName=#{tagName} where id=#{id}
+    </update>
+
+    <delete id="deleteBlogTag" parameterType="Integer">
+        delete from blogtag where id=#{id}
+    </delete>
+
+    <insert id="addBlogTag" parameterType="com.ldb.pojo.po.BlogTagPO">
+        insert into blogtag VALUES (null,#{tagName})
+    </insert>
+
+    <select id="getBlogTagCount" resultType="Long">
+        select count(*) from blogtag
+    </select>
+
+</mapper> 

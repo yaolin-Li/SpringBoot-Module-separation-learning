@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 对应dao接口 -->
+<mapper namespace="com.ldb.dao.BlogDAO">
+
+    <resultMap id="blogResultMap" type="com.ldb.pojo.po.BlogPO">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+        <result column="summary" property="summary" jdbcType="VARCHAR"/>
+        <result column="coverImageName" property="coverImageName" jdbcType="VARCHAR"/>
+        <result column="publishTime" property="publishTime" jdbcType="TIMESTAMP"/>
+        <result column="readNum" property="readNum" jdbcType="INTEGER"/>
+        <result column="is_Recommend" property="is_Recommend" jdbcType="BIT"/>
+        <result column="blogTypeId" property="blogTypeId" jdbcType="INTEGER"/>
+        <result column="blogTagId" property="blogTagId" jdbcType="INTEGER"/>
+        <association column="blogTypeId" property="blogTypePO"
+                     select="com.ldb.dao.BlogTypeDAO.getBlogType"></association>
+        <association column="blogTagId" property="blogTagPO" select="com.ldb.dao.BlogTagDAO.getBlogTag"></association>
+    </resultMap>
+
+    <sql id="listVO">
+        id,title,author,summary,coverImageName,publishTime,readNum
+    </sql>
+
+
+    <select id="listBlogDateArchiveVO" resultType="com.ldb.pojo.vo.BlogDateArchiveVO">
+        SELECT publishTime AS archiveDate,COUNT(publishTime)AS totalNum  FROM blog GROUP BY DATE_FORMAT(publishTime,"%Y-%m") ORDER BY publishTime DESC
+    </select>
+
+    <select id="getRecommendBlogVO" resultType="com.ldb.pojo.vo.BlogVO">
+        SELECT
+        <include refid="listVO"/>
+        from blog WHERE is_Recommend=1 ORDER BY publishTime desc limit 0,1
+    </select>
+
+    <select id="listNewBlog" resultType="com.ldb.pojo.vo.BlogVO">
+        select
+        <include refid="listVO"/>
+        from blog ORDER BY publishTime desc limit 0,5;
+    </select>
+
+    <select id="listHotBlog" resultType="com.ldb.pojo.vo.BlogVO">
+        select
+        <include refid="listVO"/>
+        from blog ORDER BY readNum desc limit 0,5;
+    </select>
+
+    <select id="getBlog" resultMap="blogResultMap">
+        select * from blog where id=#{id}
+    </select>
+
+    <update id="updateBlogReadNum">
+        update blog set readNum=readNum+1 where id=#{id}
+    </update>
+
+    <select id="listBlog" resultType="com.ldb.pojo.vo.BlogVO" parameterType="Map">
+        select
+        <include refid="listVO"/>
+        from blog
+        <where>
+            <if test="blogTypeId!=null">
+                and blogTypeId=#{blogTypeId}
+            </if>
+            <if test="blogTagId!=null">
+                and blogTagId=#{blogTagId}
+            </if>
+            <if test="dateArchive!=null and dateArchive!=''">
+                and publishTime like binary  #{dateArchive}
+            </if>
+        </where>
+        order by publishTime DESC
+        <if test="start!=null and pageSize!=null">
+            limit #{start},#{pageSize}
+        </if>
+
+    </select>
+
+    <select id="getBlogCount" resultType="Long" parameterType="Map">
+        select count(*) from blog
+        <where>
+            <if test="blogTypeId!=null">
+                and blogTypeId=#{blogTypeId}
+            </if>
+            <if test="blogTagId!=null">
+                and blogTagId=#{blogTagId}
+            </if>
+            <if test="dateArchive!=null and dateArchive!=''">
+                and publishTime like #{dateArchive}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="listBlogPO" resultMap="blogResultMap" parameterType="Map">
+        select * from blog
+        <where>
+            <if test="blogTypeId!=null">
+                and blogTypeId=#{blogTypeId}
+            </if>
+            <if test="blogTagId!=null">
+                and blogTagId=#{blogTagId}
+            </if>
+        </where>
+        order by publishTime DESC
+        <if test="start!=null and pageSize!=null">
+            limit #{start},#{pageSize}
+        </if>
+
+    </select>
+
+    <insert id="addBlog" parameterType="com.ldb.pojo.po.BlogPO">
+        insert into blog values(null,#{title},#{author},#{content},#{summary},#{coverImageName},#{publishTime},0,#{is_Recommend},#{blogTypeId},#{blogTagId})
+    </insert>
+
+    <update id="updateBlog" parameterType="com.ldb.pojo.po.BlogPO">
+        update blog set title=#{title},author=#{author},content=#{content},summary=#{summary},coverImageName=#{coverImageName},is_Recommend=#{is_Recommend},blogTypeId=#{blogTypeId},blogTagId=#{blogTagId} where id=#{id}
+    </update>
+
+    <delete id="deleteBlog" parameterType="Integer">
+        delete from blog where id = #{id}
+    </delete>
+
+    <select id="getBlogCommentVO" resultType="com.ldb.pojo.vo.BlogCommentVO">
+        SELECT id,title from blog where id=#{id}
+    </select>
+
+</mapper> 

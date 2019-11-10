@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>DB' BLOG后台管理系统</title>
+    <link th:href="@{/foreground/images/blog.ico}" rel="icon" type="image/x-icon">
+    <!-- animate.css -->
+    <link th:href="@{/background/css/animate.min.css}" href="/background/css/animate.min.css" rel="stylesheet" />
+    <!-- layui.css -->
+    <link th:href="@{/background/plugin/layui/css/layui.css}" href="/background/plugin/layui/css/layui.css" rel="stylesheet" />
+    <!-- font-awesome.css -->
+    <link th:href="@{/background/plugin/font-awesome/css/font-awesome.css}" href="/background/plugin/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- 本页样式 -->
+    <link th:href="@{/background/css/main.css}" href="/background/css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="layui-layout layui-layout-admin">
+        <!--顶部-->
+        <div class="layui-header">
+            <div class="ht-console">
+                <div class="ht-user">
+                    <img src="/background/images/logo.jpg" />
+                    <a class="ht-user-name">超级管理员</a>
+                </div>
+            </div>
+            <ul class="ht-nav">
+                <li class="ht-nav-item">
+                    <a target="_blank" href="http://www.dblearn.top">前台入口</a>
+                </li>
+                <li class="ht-nav-item">
+                    <a href="javascript:;" id="individuation"><i class="fa fa-tasks fa-fw" style="padding-right:5px;"></i>个性化</a>
+                </li>
+                <li class="ht-nav-item">
+                    <a href="javascript:;"><i class="fa fa-power-off fa-fw"></i>注销</a>
+                </li>
+            </ul>
+        </div>
+        <!--侧边导航-->
+        <div class="layui-side">
+            <div class="layui-side-scroll">
+                <ul class="layui-nav layui-nav-tree" lay-filter="leftnav">
+                    <li class="layui-nav-item layui-this">
+                        <a href="javascript:;"><i class="fa fa-home fa-fw"></i>首页</a>
+                    </li>
+                    <li class="layui-nav-item ">
+                        <a href="javascript:;"><i class="fa fa-file-text"></i>博客管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;" data-url="/admin/writeBlog" data-id="1">写博客</a></dd>
+                            <dd><a href="javascript:;" data-url="/admin/blogManage" data-id="2">博客信息管理</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;"><i class="fa fa-commenting-o"></i>评论建议管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;"data-url="/admin/commentManage" data-id="3">评论管理</a></dd>
+                            <dd><a href="javascript:;" data-url="/admin/blogAdviceManage" data-id="4">建议管理</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;"><i class="fa fa-heart"></i>点点滴滴管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;" data-url="/admin/timeLineManage" data-id="5">时光轴管理</a></dd>
+                            <dd><a href="javascript:;" data-url="/admin/timeLineManage" data-id="6">照片墙管理</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;"><i class="fa fa-pencil-square-o"></i>标签类别管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;"  data-url="/admin/blogTagManage" data-id="7">博客标签管理</a></dd>
+                            <dd><a href="javascript:;" data-url="/admin/blogTypeManage" data-id="8">博客类别管理</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;"><i class="fa fa-info-circle"></i>网站信息管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;" data-url="/admin/linkManage" data-id="9">友情链接管理</a></dd>
+                            <dd><a href="javascript:;" data-url="/admin/signatureManage" data-id="10">博客签名管理</a></dd>
+                            <dd><a href="javascript:;" data-url="/admin/mottoManage" data-id="11">博客鸡汤管理</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;"><i class="fa fa-cog"></i>系统管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;" data-url="/admin/adminManage" data-id="12">修改账号密码</a></dd>
+                            <dd><a href="javascript:;" onclick="refreshSystem()">刷新系统缓存</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--收起导航-->
+        <div class="layui-side-hide layui-bg-cyan">
+            <i class="fa fa-long-arrow-left fa-fw"></i>收起导航
+        </div>
+        <!--主体内容-->
+        <div class="layui-body">
+            <div style="margin:0;position:absolute;top:4px;bottom:0px;width:100%;" class="layui-tab layui-tab-brief" lay-filter="tab" lay-allowclose="true">
+                <ul class="layui-tab-title">
+                    <li lay-id="0" class="layui-this">首页</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <p style="padding: 10px 15px; margin-bottom: 20px; margin-top: 10px; border:1px solid #ddd;display:inline-block;">
+                            上次登陆
+                            <span style="padding-left:1em;" th:text="'IP : '+${loginHistory.ip}">IP：192.168.1.101</span>
+                            <span style="padding-left:1em;" th:text="'地点 : '+${loginHistory.ipName}">地点：四川成都</span>
+                            <span style="padding-left:1em;" th:text="'时间 : '+${#calendars.format(loginHistory.loginTime,'yyyy-MM-dd HH:mm:ss')}">时间：2017-3-26 14：12</span>
+                        </p>
+                        <fieldset class="layui-elem-field layui-field-title">
+                            <legend>统计信息</legend>
+                            <div class="layui-field-box">
+                                <div style="display: inline-block; width: 100%;">
+                                    <div class="ht-box layui-bg-blue">
+                                        <p th:text="${todayReadNum}">123</p>
+                                        <p>今日访问</p>
+                                    </div>
+                                    <div class="ht-box layui-bg-red">
+                                        <p th:text="${todayLike}">32</p>
+                                        <p>今日点赞</p>
+                                    </div>
+                                    <div class="ht-box layui-bg-green">
+                                        <p th:text="${readNum}">55</p>
+                                        <p>访问总数</p>
+                                    </div>
+                                    <div class="ht-box layui-bg-orange">
+                                        <p th:text="${likeNum}">123</p>
+                                        <p>点赞总数</p>
+                                    </div>
+                                    <div class="ht-box layui-bg-cyan">
+                                        <p th:text="${commentNum}">321</p>
+                                        <p>评论总数</p>
+                                    </div>
+                                    <div class="ht-box layui-bg-black">
+                                        <p th:text="${session.blogNum}">231</p>
+                                        <p>文章总数</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--底部信息-->
+        <div class="layui-footer">
+            <p style="line-height:44px;text-align:center;">DB'S BLOG后台管理系统</p>
+        </div>
+        <!--个性化设置-->
+        <div class="individuation animated flipOutY layui-hide">
+            <ul>
+                <li><i class="fa fa-cog" style="padding-right:5px"></i>个性化</li>
+            </ul>
+            <div class="explain">
+                <small>从这里进行系统设置和主题预览</small>
+            </div>
+            <div class="setting-title">设置</div>
+            <div class="setting-item layui-form">
+                <span>侧边导航</span>
+                <input type="checkbox" lay-skin="switch" lay-filter="sidenav" lay-text="ON|OFF" checked>
+            </div>
+            <div class="setting-item layui-form">
+                <span>管家提醒</span>
+                <input type="checkbox" lay-skin="switch" lay-filter="steward" lay-text="ON|OFF" checked>
+            </div>
+            <div class="setting-title">主题</div>
+            <div class="setting-item skin skin-default" data-skin="skin-default">
+                <span>低调优雅</span>
+            </div>
+            <div class="setting-item skin skin-deepblue" data-skin="skin-deepblue">
+                <span>蓝色梦幻</span>
+            </div>
+            <div class="setting-item skin skin-pink" data-skin="skin-pink">
+                <span>姹紫嫣红</span>
+            </div>
+            <div class="setting-item skin skin-green" data-skin="skin-green">
+                <span>一碧千里</span>
+            </div>
+        </div>
+    </div>
+    <!-- layui.js -->
+    <script th:src="@{/background/plugin/layui/layui.js}" src="../../static/background/plugin/layui/layui.js"></script>
+    <!-- layui规范化用法 -->
+
+    <script type="text/javascript" th:inline="javascript">
+        layui.config({
+            base: '/background/js/'
+        }).use('main');
+        var notReplyNum=[[${notReplyNum}]];
+
+        function refreshSystem(){
+            $.ajax({
+                url:"/admin/refreshSystem",
+                data:{},
+                type:"GET",
+                success:function (result) {
+                    var result=eval("("+result+")");
+                    if(result){
+                        alert("刷新系统缓存成功!")
+                    }
+                }
+            })
+        }
+
+    </script>
+
+
+
+</body>
+</html>
