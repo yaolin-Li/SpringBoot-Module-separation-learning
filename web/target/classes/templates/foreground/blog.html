@@ -1,0 +1,344 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>DB'S BLOG</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content=""/>
+    <link href="http://op93pqovl.bkt.clouddn.com/images/blog.ico" rel="icon" type="image/x-icon">
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel='stylesheet' type='text/css'/>
+    <link href="http://op93pqovl.bkt.clouddn.com/css/style.css" rel='stylesheet' type='text/css'/>
+    <link th:href="@{/foreground/css/mystyle.css}" href="../../static/foreground/css/mystyle.css" rel='stylesheet' type='text/css'/>
+    <link href="http://op93pqovl.bkt.clouddn.com/css/dropdown.css" rel='stylesheet' type='text/css'/>
+    <link href="http://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.min.css" rel="stylesheet">
+    <link href="http://op93pqovl.bkt.clouddn.com/css/jquery.emoji.css" rel="stylesheet">
+    <!--代码高亮-->
+    <link href="http://cdn.bootcss.com/SyntaxHighlighter/3.0.83/styles/shCore.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/SyntaxHighlighter/3.0.83/styles/shThemeEclipse.min.css" rel="stylesheet">
+    <style>
+        img{
+            max-width: 100%!important;
+        }
+    </style>
+
+    <!--百度站点统计-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?8bbebf81099e93cb652e9215fa86d98c";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+</head>
+<body>
+<div class="header" id="ban" th:include="foreground/common::header"></div><!--头部导航结束-->
+
+<div class="header-bottom" th:include="foreground/common::blogTitle"></div><!--博客标题结束-->
+
+<!--<div class="banner-1"></div>-->
+
+<!-- technology-left -->
+<div class="technology" >
+    <div class="container">
+        <div class="col-md-9 technology-left">
+            <div class="agileinfo">
+                <h2 class="w3" style="text-align: center" th:text="${blog.title}">博文标题</h2>
+                <p class="box">
+                    <span th:text="'发布时间 : '+${#calendars.format(blog.publishTime,'yyyy-MM-dd HH:mm:ss')}">发布时间 : 2017-4-14 11:12:32</span>
+                    <span th:text="'编辑 : '+${blog.author}">编辑 : 氧化钡|D B</span>
+                    <span th:text="'阅读('+${blog.readNum}+')'">阅读(15)</span>
+                </p>
+                <div class="single">
+                    <p class="sub" th:utext="${blog.content}"></p>
+                </div>
+                <div class="response">
+                    <h4>评论</h4>
+                </div>
+                <div class="contact-section" style="padding-top:0;">
+                    <div class="contact-grids">
+                        您的昵称 : <input type="text" placeholder="请输入您的昵称" id="nickName" class="nickName"><br>
+                        <span class="comment-title">评论内容 : </span><br>
+                        <textarea class="comment" id="content" rows="3"></textarea>
+                        <input type="button" th:onclick="'addComment('+${blog.id}+')'" class="send" value="提交">
+                    </div>
+                </div><!--回复框结束-->
+                <hr id="responseHr">
+                <div class="response"  th:each="comment:${commentList}">
+                        <div class="media response-info">
+                        <div>
+                            <div class="media-left response-text-left">
+                                <a href="#">
+                                    <img th:src="@{/foreground/images/sin2.jpg}" src="../../static/foreground/images/sin1.jpg" class="img-responsive" alt="" style="width: 50px">
+                                </a>
+                            </div>
+                            <div class="media-body response-text-right">
+                                <p ><span th:text="${comment.nickName}+' : '+${comment.content}" class="sourceText">留言内容 : balabal></span></p>
+                            <ul>
+                                <li th:text="${#calendars.format(comment.publishTime,'yyyy-MM-dd HH:mm:ss')}">Jun 21, 2016</li>
+                                <li><a th:href="'javascript:showReply('+${comment.id}+')'" href="javascript:showReply()"  th:id="'replyButton'+${comment.id}" id="replyButton">回复</a></li>
+                            </ul>
+                            <div class="media response-info">
+                                <div class="media-left response-text-left" style="width: 100%">
+                                    <div th:each="reply:${comment.commentReplyVOList}" th:class="'replyPanel'+${comment.id}" class="replyPanel">
+                                        <a >
+                                            <img th:src="@{/foreground/images/sin1.jpg}" th:if="${reply.role}==true" src="../../static/foreground/images/sin2.jpg" class="img-responsive"
+                                                 alt="" style="width: 50px">
+                                            <img th:src="@{/foreground/images/sin2.jpg}" th:if="${reply.role}==false" src="../../static/foreground/images/sin2.jpg" class="img-responsive"
+                                                 alt="" style="width: 50px">
+                                        </a>
+                                        <div style="display: inline-block;vertical-align: middle">
+                                            <p class="reply-content sourceText" th:if="${reply.role}==true" th:text="'博主回复 : '+${reply.content}">博主回复balabala</p>
+                                            <p class="reply-content sourceText" th:if="${reply.role}==false" th:text="'楼主回复 : '+${reply.content}">博主回复balabala</p>
+                                            <ul class="reply-date">
+                                                <li th:text="${#calendars.format(reply.publishTime,'yyyy-MM-dd HH:mm:ss')}">July 17, 2016</li>
+                                            </ul>
+                                        </div>
+                                        <div class="lineBar"></div>
+                                    </div>
+
+                                    <div class="contact-section" style="padding:0;display: none" th:id="'replyPanel'+${comment.id}" id="replyPanel">
+                                            <span class="comment-title">回复内容 : </span><br>
+                                            <textarea class="comment" th:id="'commentReply'+${comment.id}"  rows="3"></textarea>
+                                            <input type="button" th:onclick="'addCommentReply('+${comment.id}+')'" class="send" value="提交">
+                                    </div><!--回复框-->
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div><!--留言结束-->
+                    <hr>
+                </div>
+
+
+                <div class="clearfix"></div>
+            </div>
+        </div><!--左侧内容结束-->
+
+
+        <div class="col-md-3 technology-right" th:include="foreground/common::rightNav"></div><!--右侧内容结束-->
+
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="footer" th:include="foreground/common::footer"></div><!--尾部结束-->
+
+<div class="copyright wow fadeInDown" data-wow-duration=".8s" data-wow-delay=".2s"
+     th:include="foreground/common::copyright"></div><!--版权区结束-->
+
+<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+<script src="http://op93pqovl.bkt.clouddn.com/js/jquery.svg3dtagcloud.min.js"></script>
+<script src="http://cdn.bootcss.com/modernizr/2.6.2/modernizr.min.js"></script>
+<script src="http://op93pqovl.bkt.clouddn.com/js/jquery.dropdown.js"></script>
+<script src="http://op93pqovl.bkt.clouddn.com/js/time.js"></script>
+<script th:src="@{/foreground/js/myjs.js}" type="text/javascript" src="../../static/foreground/js/myjs.js"></script>
+<script src="http://cdn.bootcss.com/jquery-mousewheel/3.0.6/jquery.mousewheel.min.js" type="text/javascript"></script>
+<script src="http://cdn.bootcss.com/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.min.js" type="text/javascript"></script>
+<script src="http://op93pqovl.bkt.clouddn.com/js/jquery.emoji.js" type="text/javascript" ></script>
+<script src="http://cdn.bootcss.com/layer/3.0.1/layer.min.js" type="text/javascript"></script>
+<!--代码高亮-->
+<script src="http://cdn.bootcss.com/SyntaxHighlighter/3.0.83/scripts/shCore.min.js"></script>
+<script src="http://cdn.bootcss.com/SyntaxHighlighter/3.0.83/scripts/shBrushJava.min.js"></script>
+<script src="http://cdn.bootcss.com/SyntaxHighlighter/3.0.83/scripts/shBrushXml.min.js"></script>
+<script src="http://cdn.bootcss.com/SyntaxHighlighter/3.0.83/scripts/shBrushSql.min.js"></script>
+<script src="http://cdn.bootcss.com/SyntaxHighlighter/3.0.83/scripts/shBrushPython.min.js"></script>
+<script src="http://cdn.bootcss.com/SyntaxHighlighter/3.0.83/scripts/shBrushJScript.min.js"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.all();
+</script>
+<script>
+
+    function addComment(blogId){
+        var nickName=$("#nickName").val();
+        var content=$("#content").val();
+        if(nickName==null||nickName==''){
+            alert("请输入您的昵称哦!");
+            return;
+        }
+        if(content==null||content==''){
+            alert("请输入回复内容哦!");
+            return;
+        }
+        $.ajax({
+            url:"/comment",
+            type:"POST",
+            data:{
+                blogId:blogId,
+                nickName:nickName,
+                content:content
+            },
+            success:function(result){
+                var result=eval("("+result+")");
+                if(result.success==false){
+                    alert("留言失败，可能是系统出了故障~~(╯﹏╰)");
+                    return;
+                }else{
+                    var response=$("#responseHr");
+                        $("<div class='response'>" +
+                            "<div class='media response-info'>" +
+                            "<div>" +
+                            "<div class='media-left response-text-left'><a href='#'><img src='/foreground/images/sin2.jpg' class='img-responsive' style='width: 50px'></a></div>"+
+                            "<div class='media-body response-text-right'><p ><span class='sourceText'>"+result.nickName+" : "+result.content+"</span></p><ul>"+
+                            "<li>"+result.publishTime+"</li>"+
+                            "<li><a href='javascript:showReply("+result.id+")' id='replyButton"+result.id+"'>回复</a></li></ul><div class='media response-info'><div class='media-left response-text-left' style='width: 100%'>"+
+                            "<div class='contact-section' style='padding:0;display: none'  id='replyPanel"+result.id+"'>"+
+                            "<span class='comment-title'>回复内容 : </span><br><textarea class='comment' id='commentReply"+result.id+"' rows='3'></textarea><input type='button' onclick='addCommentReply("+result.id+")' class='send' value='提交'>"+
+                            "</div></div></div></div></div><div class='clearfix'></div></div><!--留言结束--><hr></div>").insertAfter(response);
+                    parse();
+                    layer.alert("评论成功!");
+                    reset();
+                }
+
+            }
+        })
+
+    }
+    function reset(){
+        var nickName=$("#nickName").val("");
+        var content=$("#content").val("");
+    }
+
+    function addCommentReply(commentId){
+        var content=$('#commentReply'+commentId).val();
+        if(content==null||content==''){
+            alert("请输入回复内容哦!");
+            return;
+        }
+        $.ajax({
+            url:'/comment/reply',
+            type:'POST',
+            data:{
+                content:content,
+                commentId:commentId
+            },
+            success:function (result) {
+                var result=eval("("+result+")");
+                if(result.success==false){
+                    alert("回复失败，可能是系统出了故障~~(╯﹏╰)");
+                    return;
+                }else{
+                    var imgSrc;
+                    var title;
+                    if(result.role){
+                        imgSrc='/foreground/images/sin1.jpg';
+                        title=' 博主回复 : ';
+                    }else{
+                        imgSrc='/foreground/images/sin2.jpg';
+                        title=' 楼主回复 : ';
+                    }
+                    var replyPanel=document.getElementsByClassName('replyPanel'+commentId);
+                    if(replyPanel.length==0){
+                        $("<div  class='replyPanel"+commentId+"'><a><img src="+imgSrc+" class='img-responsive' style='width: 50px'></a>"+
+                            "<div style='display: inline-block;vertical-align: middle'><p class='reply-content sourceText' >"+title+result.content+"</p><ul class='reply-date'>"+
+                            "<li>"+result.publishTime+"</li></ul></div><div class='lineBar'></div></div>").insertBefore($("#replyPanel"+commentId));
+                    }else{
+                        $("<div  class='replyPanel"+commentId+"'><a><img src="+imgSrc+" class='img-responsive' style='width: 50px'></a>"+
+                            "<div style='display: inline-block;vertical-align: middle'><p class='reply-content sourceText' >"+title+result.content+"</p><ul class='reply-date'>"+
+                            "<li>"+result.publishTime+"</li></ul></div><div class='lineBar'></div></div>").insertAfter(replyPanel[replyPanel.length-1]);
+                    }
+                    parse();
+                    layer.alert("回复成功!");
+                }
+
+            }
+        });
+    }
+
+    function showReply(id) {
+
+        var div = document.getElementById("replyPanel"+id);
+        var button = document.getElementById("replyButton"+id);
+        var show = div.dataset.show;//获取data-show
+        if(show=='true'){
+            div.style.display = "none";
+            div.dataset.show = "false";
+            button.innerHTML = "回复";
+
+        }else{
+            div.style.display = "block";
+            div.dataset.show = "true";
+            button.innerHTML = "收回";
+
+        }
+    }
+
+
+
+    window.onload = function () {
+        $("#content").emoji({
+            animation: 'slide',
+            icons: [{
+                name: "qq",
+                path: "/foreground/images/qq/",
+                maxNum: 91,
+                excludeNums: [41, 45, 54],
+                file: ".gif",
+                placeholder: "#qq_{alias}#"
+            }]
+        });
+        parse();
+
+    };
+    function parse() {
+        $(".sourceText").emojiParse({
+            icons: [{
+                path: "/foreground/images/qq/",
+                file: ".gif",
+                placeholder: "#qq_{alias}#"
+            }]
+        });
+    }
+</script>
+
+<script  th:inline="javascript">
+    $(document).ready(function () {
+        var blogTagList=[[${application.blogTagList}]];
+        var entries=[];
+        for(var i in blogTagList){
+            var entry={
+                label:blogTagList[i].tagName,
+                url: '/blog/tag/'+blogTagList[i].id
+            }
+            entries.push(entry);
+        }
+        var settings = {
+            entries: entries,
+            width: '100%',
+            height: '100%',
+            radius: '73%',
+            radiusMin: '50%',
+            bgDraw: true,
+            bgColor: '#FFF',
+            opacityOver: 1.00,
+            opacityOut: 0.13,
+            opacitySpeed: 6,
+            fov: 800,
+            speed: 0.5,
+            fontFamily: 'Oswald, Arial, sans-serif',
+            fontSize: '15',
+            fontColor: '#000',
+            fontWeight: 'normal',//bold
+            fontStyle: 'normal',//italic
+            fontStretch: 'normal',//wider, narrower, ultra-condensed, extra-condensed, condensed, semi-condensed, semi-expanded, expanded, extra-expanded, ultra-expanded
+            fontToUpperCase: false
+
+        };
+
+        //var svg3DTagCloud = new SVG3DTagCloud( document.getElementById( 'holder'  ), settings );
+        $('#tag-cloud').svg3DTagCloud(settings);
+        parse()
+    });
+
+
+
+</script>
+</body>
+</html>

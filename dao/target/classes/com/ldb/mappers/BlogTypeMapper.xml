@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 对应dao接口 -->
+<mapper namespace="com.ldb.dao.BlogTypeDAO">
+    <resultMap id="blogTypeResultMap" type="com.ldb.pojo.po.BlogTypePO" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="typeName" property="typeName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="list">
+        id,typeName
+    </sql>
+
+
+    <select id="listBlogTypePO" resultMap="blogTypeResultMap">
+        select <include refid="list"/> from blogType
+    </select>
+
+    <select id="getBlogType" resultMap="blogTypeResultMap">
+        select * FROM blogType where id=#{blogTypeId}
+    </select>
+
+    <update id="updateBlogType" parameterType="com.ldb.pojo.po.BlogTypePO">
+        update blogtype SET typeName=#{typeName} where id=#{id}
+    </update>
+
+    <delete id="deleteBlogType" parameterType="Integer">
+        delete from blogtype where id=#{id}
+    </delete>
+
+    <insert id="addBlogType" parameterType="com.ldb.pojo.po.BlogTypePO">
+        insert into blogtype VALUES (null,#{typeName})
+    </insert>
+</mapper> 
