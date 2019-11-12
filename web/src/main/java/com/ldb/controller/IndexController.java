@@ -43,6 +43,7 @@ public class IndexController {
 
     @RequestMapping(value = {"/","/index"})
     public ModelAndView goIndex(HttpServletRequest request){
+        //返回到指定页面
         ModelAndView mav=new ModelAndView("foreground/index");
         //获取点赞数量
         mav.addObject("likeCount",likeService.getLikeCount());
