@@ -30,7 +30,7 @@
         <java.version>1.8</java.version>
         <thymeleaf.version>3.0.3.RELEASE</thymeleaf.version>
         <thymeleaf-layout-dialect.version>2.1.0</thymeleaf-layout-dialect.version>
-        <spring-boot.version>1.4.4.RELEASE</spring-boot.version>
+        <spring-boot.version>2.5.12</spring-boot.version>
         <mybatis-spring.version>1.2.0</mybatis-spring.version>
         <mybatis-connector.version>5.1.39</mybatis-connector.version>
         <druid.version>1.0.26</druid.version>
